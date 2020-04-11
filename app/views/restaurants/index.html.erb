@@ -1,0 +1,21 @@
+<%= search_form_for @q do |f| %>
+  <%= f.input :name_cont, label: 'Name contains', required: false %>
+  <%= f.input :open_at_equals, label: 'Open at', required: false, include_blank: true %>
+  <%= f.input :close_at_equals, label: 'Close at', required: false, include_blank: true %>
+  <%= f.submit "Search" %>
+<% end %>
+
+
+<table>
+  <tr><th>Name</th>
+      <th>Description</th>
+      <th>Action</th>
+  </tr>
+  <% @restaurants.each do |restaurant| %>
+    <tr><td><%= restaurant.name %></td>
+        <td><%= ''%></td>
+        <td><%= link_to "Detail", restaurant_path(restaurant) %></td>
+    </tr>
+  <% end %>
+</table>
+<%= paginate @restaurants %>

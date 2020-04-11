@@ -26,6 +26,21 @@ class Restaurant < ApplicationRecord
       .distinct
   end
 
+
+  class << self
+    def ransackable_scopes(auth_object = nil)
+      %i(open_at_equals close_at_equals)
+    end
+
+    def open_at_equals(*t)
+      open_at(Time.parse(*t))
+    end
+
+    def close_at_equals(*t)
+      close_at(Time.parse(*t))
+    end
+  end
+
   private
 
   # A utility method to separate TimeWithZone to wday and hhmm
