@@ -26,3 +26,6 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Ignore rails generated schema.rb file
+db/schema.rb
