@@ -27,12 +27,14 @@
                 <th scope="col">Action</th>
             </tr>
           </thead>
-          <% @restaurants.each do |restaurant| %>
-            <tr><td><%= restaurant.name %></td>
-                <td><%= periods_in_human_readable_form(restaurant)%></td>
-                <td><%= link_to "Detail", restaurant_path(restaurant), class: "btn btn-sm btn-outline-info" %></td>
-            </tr>
-          <% end %>
+          <tbody>
+            <% @restaurants.each do |restaurant| %>
+              <tr><td><%= restaurant.name %></td>
+                  <td><%= periods_in_human_readable_form(restaurant, limit: 3)%></td>
+                  <td><%= link_to "Detail", restaurant_path(restaurant), class: "btn btn-sm btn-outline-info" %></td>
+              </tr>
+            <% end %>
+          </tbody>
         </table>
       </div>
     </div>

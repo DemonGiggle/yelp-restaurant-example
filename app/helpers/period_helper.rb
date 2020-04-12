@@ -1,15 +1,21 @@
 module PeriodHelper
-  def periods_in_human_readable_form(restaurant)
+  def periods_in_human_readable_form(restaurant, limit: nil)
     if restaurant.periods.blank?
       "No periods found"
     else
-      str=restaurant.periods.map do |p|
+      formated=restaurant.periods.map do |p|
         wdays = p.weekdays.map do |w|
           weekday_to_human_readable_form(w)
         end.join(" ")
 
         "Weekday: #{wdays}<br>(UTC) Open: #{p.hour_start} Close: #{p.hour_end}"
-      end.join("<br>")
+      end
+
+      str= if limit.present?
+             formated.take(limit) << "... more"
+           else
+             formated
+           end.join("<br>")
 
       sanitize str
     end
