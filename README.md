@@ -1,3 +1,39 @@
+How to run
+===
+
+After the souce code was cloned, just type the following commands.
+
+```
+bundle && yarn
+```
+
+In development environment, make sure you have `postgrseql` installed. Moreover, provider a
+database user `postgresql` without password setup by default.
+
+Or if you can modify the config in `db/database.yml` to provide a database user to access
+the database.
+
+First time to setup database, just run:
+
+```
+rake db:create && rake db:migrate && rake db:seed
+```
+
+Now, it's time to run. We first run webpack server in one terminal.
+
+```
+bin/webpack-dev-server
+```
+
+And run web application in another terminal.
+
+```
+rails s
+```
+
+Open browser to direct the url to: `localhost:3000/restaurants`
+
+
 Design Thinking
 ===
 
