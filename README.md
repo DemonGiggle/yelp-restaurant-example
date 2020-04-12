@@ -37,6 +37,8 @@ Open browser to direct the url to: `localhost:3000/restaurants`
 Design Thinking
 ===
 
+<img src="./docs/entities.png" />
+
 The use case describes user can specify a specific date, and the server should output the restaurants which
 are open at that time.
 
