@@ -1,0 +1,22 @@
+<div class="row mt-3">
+  <div class="col-sm">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title"><%= @restaurant.name %></div>
+        <table class="table table-bordered">
+          <tbody>
+            <tr><th scope="row">Data created date</th>
+                <td><%= @restaurant.created_at %></td>
+            </tr>
+            <tr><th scope="row">Data modified date</th>
+                <td><%= @restaurant.updated_at %></td>
+            </tr>
+            <tr><th scope="row">Open periods</th>
+                <td><%= periods_in_human_readable_form(@restaurant) %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
