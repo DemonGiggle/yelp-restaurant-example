@@ -91,3 +91,73 @@ SELECT distinct * from restaruants
 
 Note that the hours in `periods` table should be UTC. Therefore, if the server locates on different
 timezone, we need to convert the query time to UTC before searching through database.
+
+
+Future Work
+===
+
+Normally, a restaurant will have the same open/close period among weekdays. It would be better
+to write a script to merge `periods`.
+
+For example, a restaurant may have three `periods` like this:
+
+- weekdays: [1], hour_start: 0800, hour_end: 1700
+- weekdays: [2], hour_start: 0800, hour_end: 1700
+- weekdays: [3], hour_start: 0800, hour_end: 1700
+
+So, we should merage three into one `periods`, and it becomes:
+
+- weekdays: [1,2,3], hour_start: 0800, hour_end: 1700
+
+The merge script can be triggered depends on the scenario:
+
+- before a restaurnt is saved
+- data importing
+
+
+Questions
+===
+
+1. What if we have a large number of restaurants, does it still work?
+
+For insert/update/delete part, MVCC part could handle it unless we disable autovacuum.
+
+For query part, since we paginate the query, normally it would not cause trouble. But I did
+calculate the count of total records. In Postgresql MVCC architecture, `count` will perform
+table scan, in this case, we have to ignore to calculate the total count. This part is used
+in the text `Restaurant Count: xx` above the table on UI.
+
+Well, the answer above bases on the current scenario, if things go complicated, we would need
+to re-evaluate it again. For example, the restauarnts may be heavily updated, which would
+introduce some locks on records, may block the query somehow.
+
+By the way, schema change need more cautions on large table. For example, add a column with
+index or with default value ... etc. That is the worst part in Postgres, while MySQL normally
+has no such issue.
+
+
+2. What if we have a large amount of users, does it still work?
+
+If there are really too many users rush into Rails, usually, the app server will be getting
+slow and then unresponsive. In this case, we may add a `nginx` server before that to set a
+connection limit to protect the app server behind it.
+
+Of course, we can scale up horizontally for the app servers to receive more traffic.
+
+As for to increase the throughput for a app server, we can add a cache layer to return the
+result immediately to relieve database loading and any further processing in app server.
+
+What to cache? Well, normally the restaurant data does not always change. User may give a specific
+time to query the opened restaurants. Therefore, we can use bucket style cache to cache the result.
+
+For example, if one user gives a query at `2020-04-12 12:10`, the result `R` will be saved in cache
+server with the key as time align to `Sun-1200`, and the value is the `R`.
+
+Another user performs a query at `2020-04-19 12:30`, and we calculate the key as `Sun-1200`, assume
+the data will not be changed within 30 min, the use should get the same result `R`.
+
+Of cause, the key should be given a expire time, may be 5 minute, to make sure any change applied should
+be reflected some time later.
+
+Actually, the cache is kind of hard because there is always some edge restaurant that will located at the
+boundary. Here, I only provide some basic idea.
