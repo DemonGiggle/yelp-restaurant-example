@@ -4,9 +4,9 @@
       <div class="card-body">
         <div class="card-title">Search</div>
         <%= search_form_for @q do |f| %>
-          <%= f.input :name_cont, label: 'Name contains', required: false %>
-          <%= f.input :open_at_equals, label: 'Open at', required: false, include_blank: true %>
-          <%= f.input :close_at_equals, label: 'Close at', required: false, include_blank: true %>
+          <%= f.input :name_cont, label: 'Name contains', required: false, placeholder: 'e.g. Toast' %>
+          <%= f.input :open_at_equals, label: 'Filter restaurants open at', required: false, include_blank: true, placeholder: 'yyyy-mm-dd hh:mm (local time)', hint: 'e.g. 2018-10-12 13:44' %>
+          <%= f.input :close_at_equals, label: 'Filter restaurants close at', required: false, include_blank: true, placeholder: 'yyyy-mm-dd hh:mm (local time)', hint: 'e.g. 2018-10-12 13:44' %>
           <%= f.submit "Search", class: "btn btn-primary" %>
         <% end %>
       </div>
