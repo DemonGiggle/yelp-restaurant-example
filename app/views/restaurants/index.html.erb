@@ -29,7 +29,7 @@
           </thead>
           <% @restaurants.each do |restaurant| %>
             <tr><td><%= restaurant.name %></td>
-                <td><%= ''%></td>
+                <td><%= periods_in_human_readable_form(restaurant)%></td>
                 <td><%= link_to "Detail", restaurant_path(restaurant), class: "btn btn-sm btn-outline-info" %></td>
             </tr>
           <% end %>
