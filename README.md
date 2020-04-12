@@ -1,3 +1,6 @@
+<img src="./docs/demo.png">
+
+
 How to run
 ===
 
