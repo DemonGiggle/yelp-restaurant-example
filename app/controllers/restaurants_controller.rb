@@ -1,7 +1,7 @@
 class RestaurantsController < ApplicationController
   def index
     @q = Restaurant.ransack(params[:q])
-    @restaurants = @q.result.order(id: :desc).page(params[:page])
+    @restaurants = @q.result.order(id: :desc).page(params[:page]).per(3)
   end
 
   def show
